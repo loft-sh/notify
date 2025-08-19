@@ -107,7 +107,7 @@ func gostream(_, info uintptr, n C.size_t, paths, flags, ids uintptr) {
 				ID:    *(*uint64)(unsafe.Pointer(ids + i*offid)),
 			})
 		}
-		
+
 	}
 	fn(ev)
 }
@@ -174,7 +174,7 @@ func (s *stream) Start() error {
 	if ref == nilstream {
 		return errCreate
 	}
-	C.FSEventStreamSetDispatchQueue(ref, C.dispatch_get_main_queue())
+	C.FSEventStreamSetDispatchQueue(ref, C.dispatch_queue_t(C.dispatch_queue_create(nil, nil)))
 	if C.FSEventStreamStart(ref) == C.Boolean(0) {
 		C.FSEventStreamInvalidate(ref)
 		return errStart
